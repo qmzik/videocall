@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>App</title>
+    <style>
+        video {
+            width:480px;
+            height:360px;
+        }
+        .divHolder {
+            position:relative;
+            float:left;
+            background-color: white;
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+<button onclick = "connect();">Connect to server</button>
+<button onclick="muteVideo()">Mute video</button>
+<button onclick="enableVideo()">Enable video</button>
+<button onclick="muteAudio()">Mute voice</button>
+<button onclick="enableAudio()">Enable voice</button>
+<button onclick="shareScreen()">Share screen</button>
+<div>
+    <div class="divHolder">
+        <video autoplay="autoplay" id="selfVideo" muted="muted" volume="0" ></video>
+    </div>
+
+    <div class="divHolder">
+        <video autoplay="autoplay" id="callerVideo1"></video>
+    </div>
+
+    <div class="divHolder">
+        <video autoplay="autoplay" id="callerVideo2"></video>
+    </div>
+
+    <div class="divHolder">
+        <video autoplay="autoplay" id="callerVideo3"></video>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script type="text/javascript" src="easyrtc.js"></script>
+<script type="text/javascript" src="App.js"></script>
+</body>
+</html>
