@@ -1,6 +1,8 @@
+const APP_NAME = 'videocall';
+
 function connect() {
   easyrtc.setRoomOccupantListener(callEverybodyElse);
-  easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo",
+  easyrtc.easyApp(APP_NAME, "selfVideo",
     ["callerVideo1", "callerVideo2", "callerVideo3"],
     loginSuccess, loginFailure);
 }
@@ -21,8 +23,25 @@ function muteAudio () {
   easyrtc.enableMicrophone(false)
 }
 
-function shareScreen () {
-  easyrtc.isdesc
+function listVideoDevices () {
+  easyrtc.getVideoSourceList(list => {
+    let devices = document.getElementById('devices');
+    console.log(list);
+    for (let i = 0; i < list.length; i++) {
+      console.log(list[i].label);
+      let button = document.createElement('button');
+      button.appendChild(document.createTextNode(list[i].label));
+      button.onclick = () => {
+        easyrtc.setVideoSource(list[i].deviceId);
+        easyrtc.initMediaSource(() => {
+          let self = document.getElementById('selfVideo');
+          easyrtc.setVideoObjectSrc(self, easyrtc.getLocalStream());
+          easyrtc.connect(APP_NAME, console.log('success!'), console.log('fail :('))
+        }, console.log('init failed'), '')
+      }
+      devices.appendChild(button);
+    }
+  })
 }
 
 function callEverybodyElse(roomName, otherPeople) {
