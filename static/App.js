@@ -1,6 +1,7 @@
 const APP_NAME = 'videocall';
 
 function connect() {
+  easyrtc.setPeerListener(addToConversation, 'message')
   easyrtc.setRoomOccupantListener(callEverybodyElse);
   easyrtc.easyApp(APP_NAME, "selfVideo",
     ["callerVideo1", "callerVideo2", "callerVideo3"],
@@ -78,9 +79,31 @@ function callEverybodyElse(roomName, otherPeople) {
     establishConnection(users.length - 1);
 }
 
+function sendMessage () {
+  let msg = document.getElementById('messages').value;
+
+  if(msg.replace(/\s/g, "").length === 0)
+    return;
+
+  addToConversation('Me', 'message', msg);
+
+  let listIds = easyrtc.getRoomOccupantsAsArray('default');
+  console.log(listIds);
+
+  for(let i = 0; i < listIds.length; i++) {
+    easyrtc.sendDataWS(listIds[i], 'message', msg);
+  }
+}
+
+function addToConversation (id, type, text) {
+  text = text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  text = text.replace(/\n/g, "<br />");
+  document.getElementById("conversation").innerHTML +=
+    "<b>" + id + ":</b>&nbsp;" + text + "<br />";
+}
 
 function loginSuccess(id) {
-  alert(id + " присоединился");
+  console.log(id + " connected");
 }
 
 function loginFailure(errorCode, message) {

@@ -22,7 +22,7 @@
 <button onclick="enableVideo()">Enable video</button>
 <button onclick="muteAudio()">Mute voice</button>
 <button onclick="enableAudio()">Enable voice</button>
-<button onclick="listVideoDevices()">Change device</button>
+<button onclick="listVideoDevices()">Change video device</button>
 <div id="devices"></div>
 <div>
     <div class="divHolder">
@@ -40,6 +40,12 @@
     <div class="divHolder">
         <video autoplay="autoplay" id="callerVideo3"></video>
     </div>
+</div>
+
+<div id="chat">
+    <textarea id="messages"></textarea>
+    <button id="sendMessage" onclick="sendMessage()">Send</button>
+    <div id="conversation"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
